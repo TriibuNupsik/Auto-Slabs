@@ -3,7 +3,6 @@ package io.github.andrew6rant.autoslabs.mixin;
 import io.github.andrew6rant.autoslabs.RenderUtil;
 import io.github.andrew6rant.autoslabs.SlabLockEnum;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.ShapeContext;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.*;
 import net.minecraft.client.util.math.MatrixStack;
