@@ -2,7 +2,6 @@ package io.github.andrew6rant.autoslabs.mixin;
 
 import io.github.andrew6rant.autoslabs.PlacementUtil;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.HorizontalConnectingBlock;
 import net.minecraft.block.PaneBlock;
 import net.minecraft.block.SlabBlock;
 import net.minecraft.fluid.FluidState;
@@ -18,21 +17,32 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
-@Mixin(PaneBlock.class)
-public class PaneBlockMixin extends HorizontalConnectingBlock {
+import static net.minecraft.block.HorizontalConnectingBlock.NORTH;
+import static net.minecraft.block.HorizontalConnectingBlock.SOUTH;
+import static net.minecraft.block.HorizontalConnectingBlock.WEST;
+import static net.minecraft.block.HorizontalConnectingBlock.EAST;
+import static net.minecraft.block.HorizontalConnectingBlock.WATERLOGGED;
 
-    public PaneBlockMixin(float radius1, float radius2, float boundingHeight1, float boundingHeight2, float collisionHeight, Settings settings) {
-        super(radius1, radius2, boundingHeight1, boundingHeight2, collisionHeight, settings);
-    }
+@Mixin(PaneBlock.class)
+public class PaneBlockMixin {
 
     @Inject(method = "getStateForNeighborUpdate(Lnet/minecraft/block/BlockState;Lnet/minecraft/util/math/Direction;Lnet/minecraft/block/BlockState;Lnet/minecraft/world/WorldAccess;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/util/math/BlockPos;)Lnet/minecraft/block/BlockState;",
             at = @At(value = "HEAD"), cancellable = true)
     public final void autoslabs$neighborConnectsToVerticalSlab(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos, CallbackInfoReturnable<BlockState> cir) {
         if (direction.getAxis().isHorizontal()) {
-            if (state.get(WATERLOGGED)) { // I'm puttting this here because if the axis isn't horizontal, Vanilla code will still properly check the waterlogged state. My inject changes that so I need this
+            if (state.get(WATERLOGGED)) {
                 world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
             }
-            cir.setReturnValue(state.with(HorizontalConnectingBlock.FACING_PROPERTIES.get(direction), PlacementUtil.calcPaneCanConnectToVerticalSlab(direction, neighborState, neighborState.isSideSolidFullSquare(world, pos, direction.getOpposite()))));
+            // Use the correct property for each direction
+            if (direction == Direction.NORTH) {
+                cir.setReturnValue(state.with(NORTH, PlacementUtil.calcPaneCanConnectToVerticalSlab(direction, neighborState, neighborState.isSideSolidFullSquare(world, pos, direction.getOpposite()))));
+            } else if (direction == Direction.SOUTH) {
+                cir.setReturnValue(state.with(SOUTH, PlacementUtil.calcPaneCanConnectToVerticalSlab(direction, neighborState, neighborState.isSideSolidFullSquare(world, pos, direction.getOpposite()))));
+            } else if (direction == Direction.WEST) {
+                cir.setReturnValue(state.with(WEST, PlacementUtil.calcPaneCanConnectToVerticalSlab(direction, neighborState, neighborState.isSideSolidFullSquare(world, pos, direction.getOpposite()))));
+            } else if (direction == Direction.EAST) {
+                cir.setReturnValue(state.with(EAST, PlacementUtil.calcPaneCanConnectToVerticalSlab(direction, neighborState, neighborState.isSideSolidFullSquare(world, pos, direction.getOpposite()))));
+            }
         }
     }
 
