@@ -12,7 +12,7 @@ import net.minecraft.util.math.Vec2f;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.shape.VoxelShape;
 import org.joml.Vector3f;
-import virtuoel.statement.api.StateRefresher;
+import io.github.andrew6rant.autoslabs.statement.StatementStateRefresher;
 
 import java.util.Optional;
 
@@ -43,7 +43,7 @@ public class Util {
 
     public static void registerSlab(Block block) {
         if (block instanceof SlabBlock slabBlock) {
-            StateRefresher.INSTANCE.addBlockProperty(slabBlock, VERTICAL_TYPE, VerticalType.FALSE);
+            StatementStateRefresher.INSTANCE.addBlockProperty(slabBlock, VERTICAL_TYPE, VerticalType.FALSE);
             ModelUtil.setup(AUTO_SLABS_RESOURCES, slabBlock);
         }
     }

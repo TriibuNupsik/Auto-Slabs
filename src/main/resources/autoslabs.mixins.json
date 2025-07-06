@@ -6,7 +6,7 @@
     "PaneBlockMixin",
     "ServerPlayerInteractionManagerMixin",
     "SlabBlockMixin",
-    "StateMixin"
+    "StatementStateMixin"
   ],
   "client": [
     "BlockRenderManagerMixin",

@@ -21,7 +21,10 @@ import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import net.minecraft.state.StateManager;
+import io.github.andrew6rant.autoslabs.Util;
 
 import static io.github.andrew6rant.autoslabs.Util.TYPE;
 import static io.github.andrew6rant.autoslabs.Util.VERTICAL_TYPE;
@@ -81,6 +84,11 @@ public class SlabBlockMixin extends Block implements Waterloggable {
 		} else {
 			super.afterBreak(world, player, pos, state.with(TYPE, TOP), blockEntity, stack);
 		}
+	}
+
+	@Inject(method = "appendProperties", at = @At("RETURN"))
+	private void autoslabs$addVerticalTypeProperty(StateManager.Builder<Block, BlockState> builder, CallbackInfo ci) {
+		builder.add(Util.VERTICAL_TYPE);
 	}
 
 }

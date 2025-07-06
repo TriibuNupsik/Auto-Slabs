@@ -28,7 +28,7 @@
 		"autoslabs.mixins.json"
 	],
 	"depends": {
-		"fabricloader": ">=0.14.12",
+		"fabricloader": ">=${loader_version}",
 		"minecraft": ">=1.20",
 		"java": ">=17",
 		"fabric-api": "*"

@@ -9,7 +9,7 @@ import net.minecraft.block.Block;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
-import virtuoel.statement.api.StateRefresher;
+import io.github.andrew6rant.autoslabs.statement.StatementStateRefresher;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -32,7 +32,7 @@ public class AutoSlabs implements ModInitializer {
 			Util.registerSlab(block);
 		});
 
-		StateRefresher.INSTANCE.reorderBlockStates();
+		StatementStateRefresher.INSTANCE.reorderBlockStates();
 
 		// custom ARRP entrypoint that is only available in my fork of ARRP
 		RRPCallback.BETWEEN_MODS_AND_USER.register(a -> a.add(AUTO_SLABS_RESOURCES));
