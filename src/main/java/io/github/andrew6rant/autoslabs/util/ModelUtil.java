@@ -1,4 +1,4 @@
-package io.github.andrew6rant.autoslabs;
+package io.github.andrew6rant.autoslabs.util;
 
 import net.devtech.arrp.api.RuntimeResourcePack;
 import net.devtech.arrp.json.blockstate.JState;

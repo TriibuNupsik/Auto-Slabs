@@ -1,5 +1,6 @@
-package io.github.andrew6rant.autoslabs;
+package io.github.andrew6rant.autoslabs.util;
 
+import io.github.andrew6rant.autoslabs.VerticalType;
 import net.minecraft.block.Block;
 import net.minecraft.block.SlabBlock;
 import net.minecraft.block.enums.SlabType;

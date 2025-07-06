@@ -1,5 +1,8 @@
-package io.github.andrew6rant.autoslabs;
+package io.github.andrew6rant.autoslabs.util;
 
+import io.github.andrew6rant.autoslabs.AutoSlabs;
+import io.github.andrew6rant.autoslabs.SlabLockEnum;
+import io.github.andrew6rant.autoslabs.VerticalType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.PaneBlock;
@@ -21,7 +24,7 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.RaycastContext;
 
-import static io.github.andrew6rant.autoslabs.Util.*;
+import static io.github.andrew6rant.autoslabs.util.Util.*;
 import static io.github.andrew6rant.autoslabs.VerticalType.*;
 import static net.minecraft.block.LightBlock.LEVEL_15;
 import static net.minecraft.block.PaneBlock.cannotConnect;
