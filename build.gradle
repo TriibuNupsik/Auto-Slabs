@@ -20,6 +20,17 @@ repositories {
 	maven {
 		url "https://maven.terraformersmc.com/releases/"
 	}
+	exclusiveContent {
+		forRepository {
+			maven {
+				name = "Modrinth"
+				url = "https://api.modrinth.com/maven"
+			}
+		}
+		filter {
+			includeGroup "maven.modrinth"
+		}
+	}
 }
 
 dependencies {
@@ -32,7 +43,8 @@ dependencies {
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
     // Removed Statement API dependency - using internal fork instead
-    include modApi("net.devtech:arrp:${project.arrp_version}")
+    //include modApi("net.devtech:arrp:${project.arrp_version}")
+	modImplementation "maven.modrinth:arrp-but-different:0.3.0+1.21.5-Fabric"
 
 	modImplementation ("com.terraformersmc:modmenu:${project.modmenu_version}") {
 		exclude module: "fabric-api"
@@ -55,7 +67,7 @@ processResources {
 	}
 }
 
-def targetJavaVersion = 17
+def targetJavaVersion = 21
 tasks.withType(JavaCompile).configureEach {
 	// ensure that the encoding is set to UTF-8, no matter what the system default is
 	// this fixes some edge cases with special characters not displaying correctly

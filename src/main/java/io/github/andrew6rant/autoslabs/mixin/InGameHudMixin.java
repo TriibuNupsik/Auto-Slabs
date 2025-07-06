@@ -18,7 +18,7 @@ public class InGameHudMixin {
     @Shadow @Final private MinecraftClient client;
 
     @Inject(
-            method = "renderCrosshair(Lnet/minecraft/client/gui/DrawContext;)V",
+            method = "renderCrosshair",
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/client/gui/DrawContext;drawTexture(Lnet/minecraft/util/Identifier;IIIIII)V",

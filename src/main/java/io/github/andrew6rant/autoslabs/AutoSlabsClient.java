@@ -5,7 +5,7 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
-import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.resource.ResourcePackActivationType;
 import net.fabricmc.loader.api.FabricLoader;
@@ -16,7 +16,6 @@ import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketByteBuf;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import org.lwjgl.glfw.GLFW;
@@ -32,9 +31,8 @@ public class AutoSlabsClient implements ClientModInitializer {
 	public static SlabLockEnum clientSlabLockPosition = SlabLockEnum.DEFAULT_AUTOSLABS;
 
 	private void sendKeybind(SlabLockEnum lockedPosition) {
-		PacketByteBuf buf = PacketByteBufs.create();
-		buf.writeEnumConstant(lockedPosition);
-		ClientPlayNetworking.send(new Identifier("autoslabs", "slab_lock"), buf);
+		SlabLockPayload payload = new SlabLockPayload(lockedPosition.ordinal());
+		ClientPlayNetworking.send(payload);
 	}
 
 	private void setKeybind(MinecraftClient client) {
@@ -45,7 +43,7 @@ public class AutoSlabsClient implements ClientModInitializer {
 
 	@Override
 	public void onInitializeClient() {
-		ResourceManagerHelper.registerBuiltinResourcePack(new Identifier("autoslabs", "distinct_slabs"), container, Text.literal("Distinct Slabs (Built-In)"), ResourcePackActivationType.DEFAULT_ENABLED);
+		ResourceManagerHelper.registerBuiltinResourcePack(Identifier.of("autoslabs", "distinct_slabs"), container, Text.literal("Distinct Slabs (Built-In)"), ResourcePackActivationType.DEFAULT_ENABLED);
 
 		HudRenderCallback.EVENT.register((context, tickDelta) -> {
 
@@ -65,5 +63,7 @@ public class AutoSlabsClient implements ClientModInitializer {
 				}
 			}
 		});
+
+		PayloadTypeRegistry.playC2S().register(SlabLockPayload.ID, SlabLockPayload.CODEC);
 	}
 }
