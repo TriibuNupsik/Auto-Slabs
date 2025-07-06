@@ -6,13 +6,11 @@ import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.*;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.shape.VoxelShape;
-import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -28,8 +26,6 @@ import static io.github.andrew6rant.autoslabs.config.CommonConfig.showEnhancedSl
 public class WorldRendererMixin {
 
     @Shadow @Final private MinecraftClient client;
-
-    @Shadow @Nullable private ClientWorld world;
 
     @Unique private static HitResult autoslabs$captureCrosshairTarget;
     @Unique private static BlockState autoslabs$captureBlockState;

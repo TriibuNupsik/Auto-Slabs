@@ -28,9 +28,7 @@ public class AutoSlabs implements ModInitializer {
 			Util.registerSlab(block);
 		}
 
-		RegistryEntryAddedCallback.event(Registries.BLOCK).register((raw, id, block) -> {
-			Util.registerSlab(block);
-		});
+		RegistryEntryAddedCallback.event(Registries.BLOCK).register((raw, id, block) -> Util.registerSlab(block));
 
 		StatementStateRefresher.INSTANCE.reorderBlockStates();
 

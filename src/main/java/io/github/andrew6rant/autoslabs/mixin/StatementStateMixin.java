@@ -7,6 +7,7 @@ import net.minecraft.state.property.Property;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
@@ -26,6 +27,7 @@ public class StatementStateMixin<O, S> implements StatementStateExtensions<S> {
         // This preserves the vanilla sculk sensor bug
     }
     
+    @Unique
     private boolean isSlabProperty(Property<?> property) {
         return property.getName().equals("vertical_type") || property.getName().equals("type");
     }

@@ -9,7 +9,7 @@ public enum VerticalType implements StringIdentifiable {
 
     private final String name;
 
-    private VerticalType(String name) {
+    VerticalType(String name) {
         this.name = name;
     }
 

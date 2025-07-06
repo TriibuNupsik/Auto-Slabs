@@ -190,92 +190,44 @@ public class RenderUtil {
             }
             case BOTTOM_SLAB -> {
                 switch (side) {
-                    case UP, DOWN -> {
-                        drawCenterLines(entry, vertexConsumer, vecCenterBottomLeft, vecCenterBottomRight, vecCenterTopLeft, vecCenterTopRight, vecCenterMiddleLeft, vecCenterMiddleRight, vecCenterMiddleBottom, vecCenterMiddleTop, camDif, slabType, verticalType, side, red, green, blue, alpha);
-                    }
-                    case NORTH, SOUTH, EAST, WEST -> {
-                        drawTopBottomLines(entry, vertexConsumer, vecBottomLeft, vecBottomRight, vecCenterBottomLeft, vecCenterBottomRight, vecCenterMiddleBottom, slabType, verticalType, side, camDif, red, green, blue, alpha);
-                    }
+                    case UP, DOWN -> drawCenterLines(entry, vertexConsumer, vecCenterBottomLeft, vecCenterBottomRight, vecCenterTopLeft, vecCenterTopRight, vecCenterMiddleLeft, vecCenterMiddleRight, vecCenterMiddleBottom, vecCenterMiddleTop, camDif, slabType, verticalType, side, red, green, blue, alpha);
+                    case NORTH, SOUTH, EAST, WEST -> drawTopBottomLines(entry, vertexConsumer, vecBottomLeft, vecBottomRight, vecCenterBottomLeft, vecCenterBottomRight, vecCenterMiddleBottom, slabType, verticalType, side, camDif, red, green, blue, alpha);
                 }
             }
             case TOP_SLAB -> {
                 switch (side) {
-                    case UP, DOWN -> {
-                        drawCenterLines(entry, vertexConsumer, vecCenterBottomLeft, vecCenterBottomRight, vecCenterTopLeft, vecCenterTopRight, vecCenterMiddleLeft, vecCenterMiddleRight, vecCenterMiddleBottom, vecCenterMiddleTop, camDif, slabType, verticalType, side, red, green, blue, alpha);
-                    }
-                    case NORTH, SOUTH, EAST, WEST -> {
-                        drawTopBottomLines(entry, vertexConsumer, vecTopLeft, vecTopRight, vecCenterTopLeft, vecCenterTopRight, vecCenterMiddleTop, slabType, verticalType, side, camDif, red, green, blue, alpha);
-                    }
+                    case UP, DOWN -> drawCenterLines(entry, vertexConsumer, vecCenterBottomLeft, vecCenterBottomRight, vecCenterTopLeft, vecCenterTopRight, vecCenterMiddleLeft, vecCenterMiddleRight, vecCenterMiddleBottom, vecCenterMiddleTop, camDif, slabType, verticalType, side, red, green, blue, alpha);
+                    case NORTH, SOUTH, EAST, WEST -> drawTopBottomLines(entry, vertexConsumer, vecTopLeft, vecTopRight, vecCenterTopLeft, vecCenterTopRight, vecCenterMiddleTop, slabType, verticalType, side, camDif, red, green, blue, alpha);
                 }
             }
             case NORTH_SLAB_VERTICAL -> {
                 switch (side) {
-                    case UP, DOWN -> {
-                        drawTopBottomLines(entry, vertexConsumer, vecBottomLeft, vecBottomRight, vecCenterBottomLeft, vecCenterBottomRight, vecCenterMiddleBottom, slabType, verticalType, side, camDif, red, green, blue, alpha);
-                    }
-                    case NORTH, SOUTH -> {
-                        drawCenterLines(entry, vertexConsumer, vecCenterBottomLeft, vecCenterBottomRight, vecCenterTopLeft, vecCenterTopRight, vecCenterMiddleLeft, vecCenterMiddleRight, vecCenterMiddleBottom, vecCenterMiddleTop, camDif, slabType, verticalType, side, red, green, blue, alpha);
-                    }
-                    case EAST -> {
-                        drawLeftRightLines(entry, vertexConsumer, vecBottomRight, vecTopRight, vecCenterBottomRight, vecCenterTopRight, vecCenterMiddleRight, slabType, verticalType, side, camDif, red, green, blue, alpha);
-                    }
-                    case WEST -> {
-                        drawLeftRightLines(entry, vertexConsumer, vecBottomLeft, vecTopLeft, vecCenterBottomLeft, vecCenterTopLeft, vecCenterMiddleLeft, slabType, verticalType, side, camDif, red, green, blue, alpha);
-                    }
+                    case UP, DOWN -> drawTopBottomLines(entry, vertexConsumer, vecBottomLeft, vecBottomRight, vecCenterBottomLeft, vecCenterBottomRight, vecCenterMiddleBottom, slabType, verticalType, side, camDif, red, green, blue, alpha);
+                    case NORTH, SOUTH -> drawCenterLines(entry, vertexConsumer, vecCenterBottomLeft, vecCenterBottomRight, vecCenterTopLeft, vecCenterTopRight, vecCenterMiddleLeft, vecCenterMiddleRight, vecCenterMiddleBottom, vecCenterMiddleTop, camDif, slabType, verticalType, side, red, green, blue, alpha);
+                    case EAST -> drawLeftRightLines(entry, vertexConsumer, vecBottomRight, vecTopRight, vecCenterBottomRight, vecCenterTopRight, vecCenterMiddleRight, slabType, verticalType, side, camDif, red, green, blue, alpha);
+                    case WEST -> drawLeftRightLines(entry, vertexConsumer, vecBottomLeft, vecTopLeft, vecCenterBottomLeft, vecCenterTopLeft, vecCenterMiddleLeft, slabType, verticalType, side, camDif, red, green, blue, alpha);
                 }
             }
             case SOUTH_SLAB_VERTICAL -> {
                 switch (side) {
-                    case UP, DOWN -> {
-                        drawTopBottomLines(entry, vertexConsumer, vecTopLeft, vecTopRight, vecCenterTopLeft, vecCenterTopRight, vecCenterMiddleTop, slabType, verticalType, side, camDif, red, green, blue, alpha);
-                    }
-                    case NORTH, SOUTH -> {
-                        drawCenterLines(entry, vertexConsumer, vecCenterBottomLeft, vecCenterBottomRight, vecCenterTopLeft, vecCenterTopRight, vecCenterMiddleLeft, vecCenterMiddleRight, vecCenterMiddleBottom, vecCenterMiddleTop, camDif, slabType, verticalType, side, red, green, blue, alpha);
-                    }
-                    case EAST -> {
-                        drawLeftRightLines(entry, vertexConsumer, vecBottomLeft, vecTopLeft, vecCenterBottomLeft, vecCenterTopLeft, vecCenterMiddleLeft, slabType, verticalType, side, camDif, red, green, blue, alpha);
-                    }
-                    case WEST -> {
-                        drawLeftRightLines(entry, vertexConsumer, vecBottomRight, vecTopRight, vecCenterBottomRight, vecCenterTopRight, vecCenterMiddleRight, slabType, verticalType, side, camDif, red, green, blue, alpha);
-                    }
+                    case UP, DOWN -> drawTopBottomLines(entry, vertexConsumer, vecTopLeft, vecTopRight, vecCenterTopLeft, vecCenterTopRight, vecCenterMiddleTop, slabType, verticalType, side, camDif, red, green, blue, alpha);
+                    case NORTH, SOUTH -> drawCenterLines(entry, vertexConsumer, vecCenterBottomLeft, vecCenterBottomRight, vecCenterTopLeft, vecCenterTopRight, vecCenterMiddleLeft, vecCenterMiddleRight, vecCenterMiddleBottom, vecCenterMiddleTop, camDif, slabType, verticalType, side, red, green, blue, alpha);
+                    case EAST -> drawLeftRightLines(entry, vertexConsumer, vecBottomLeft, vecTopLeft, vecCenterBottomLeft, vecCenterTopLeft, vecCenterMiddleLeft, slabType, verticalType, side, camDif, red, green, blue, alpha);
+                    case WEST -> drawLeftRightLines(entry, vertexConsumer, vecBottomRight, vecTopRight, vecCenterBottomRight, vecCenterTopRight, vecCenterMiddleRight, slabType, verticalType, side, camDif, red, green, blue, alpha);
                 }
             }
             case EAST_SLAB_VERTICAL -> {
                 switch (side) {
-                    case UP -> {
-                        drawLeftRightLines(entry, vertexConsumer, vecBottomLeft, vecTopLeft, vecCenterBottomLeft, vecCenterTopLeft, vecCenterMiddleLeft, slabType, verticalType, side, camDif, red, green, blue, alpha);
-                    }
-                    case DOWN -> {
-                        drawLeftRightLines(entry, vertexConsumer, vecBottomRight, vecTopRight, vecCenterBottomRight, vecCenterTopRight, vecCenterMiddleRight, slabType, verticalType, side, camDif, red, green, blue, alpha);
-                    }
-                    case EAST, WEST -> {
-                        drawCenterLines(entry, vertexConsumer, vecCenterBottomLeft, vecCenterBottomRight, vecCenterTopLeft, vecCenterTopRight, vecCenterMiddleLeft, vecCenterMiddleRight, vecCenterMiddleBottom, vecCenterMiddleTop, camDif, slabType, verticalType, side, red, green, blue, alpha);
-                    }
-                    case NORTH -> {
-                        drawLeftRightLines(entry, vertexConsumer, vecBottomLeft, vecTopLeft, vecCenterBottomLeft, vecCenterTopLeft, vecCenterMiddleLeft, slabType, verticalType, side, camDif, red, green, blue, alpha);
-                    }
-                    case SOUTH -> {
-                        drawLeftRightLines(entry, vertexConsumer, vecBottomRight, vecTopRight, vecCenterBottomRight, vecCenterTopRight, vecCenterMiddleRight, slabType, verticalType, side, camDif, red, green, blue, alpha);
-                    }
+                    case UP, NORTH -> drawLeftRightLines(entry, vertexConsumer, vecBottomLeft, vecTopLeft, vecCenterBottomLeft, vecCenterTopLeft, vecCenterMiddleLeft, slabType, verticalType, side, camDif, red, green, blue, alpha);
+                    case DOWN, SOUTH -> drawLeftRightLines(entry, vertexConsumer, vecBottomRight, vecTopRight, vecCenterBottomRight, vecCenterTopRight, vecCenterMiddleRight, slabType, verticalType, side, camDif, red, green, blue, alpha);
+                    case EAST, WEST -> drawCenterLines(entry, vertexConsumer, vecCenterBottomLeft, vecCenterBottomRight, vecCenterTopLeft, vecCenterTopRight, vecCenterMiddleLeft, vecCenterMiddleRight, vecCenterMiddleBottom, vecCenterMiddleTop, camDif, slabType, verticalType, side, red, green, blue, alpha);
                 }
             }
             case WEST_SLAB_VERTICAL -> {
                 switch (side) {
-                    case UP -> {
-                        drawLeftRightLines(entry, vertexConsumer, vecBottomRight, vecTopRight, vecCenterBottomRight, vecCenterTopRight, vecCenterMiddleRight, slabType, verticalType, side, camDif, red, green, blue, alpha);
-                    }
-                    case DOWN -> {
-                        drawLeftRightLines(entry, vertexConsumer, vecBottomLeft, vecTopLeft, vecCenterBottomLeft, vecCenterTopLeft, vecCenterMiddleLeft, slabType, verticalType, side, camDif, red, green, blue, alpha);
-                    }
-                    case EAST, WEST -> {
-                        drawCenterLines(entry, vertexConsumer, vecCenterBottomLeft, vecCenterBottomRight, vecCenterTopLeft, vecCenterTopRight, vecCenterMiddleLeft, vecCenterMiddleRight, vecCenterMiddleBottom, vecCenterMiddleTop, camDif, slabType, verticalType, side, red, green, blue, alpha);
-                    }
-                    case NORTH -> {
-                        drawLeftRightLines(entry, vertexConsumer, vecBottomRight, vecTopRight, vecCenterBottomRight, vecCenterTopRight, vecCenterMiddleRight, slabType, verticalType, side, camDif, red, green, blue, alpha);
-                    }
-                    case SOUTH -> {
-                        drawLeftRightLines(entry, vertexConsumer, vecBottomLeft, vecTopLeft, vecCenterBottomLeft, vecCenterTopLeft, vecCenterMiddleLeft, slabType, verticalType, side, camDif, red, green, blue, alpha);
-                    }
+                    case UP, NORTH -> drawLeftRightLines(entry, vertexConsumer, vecBottomRight, vecTopRight, vecCenterBottomRight, vecCenterTopRight, vecCenterMiddleRight, slabType, verticalType, side, camDif, red, green, blue, alpha);
+                    case DOWN, SOUTH -> drawLeftRightLines(entry, vertexConsumer, vecBottomLeft, vecTopLeft, vecCenterBottomLeft, vecCenterTopLeft, vecCenterMiddleLeft, slabType, verticalType, side, camDif, red, green, blue, alpha);
+                    case EAST, WEST -> drawCenterLines(entry, vertexConsumer, vecCenterBottomLeft, vecCenterBottomRight, vecCenterTopLeft, vecCenterTopRight, vecCenterMiddleLeft, vecCenterMiddleRight, vecCenterMiddleBottom, vecCenterMiddleTop, camDif, slabType, verticalType, side, red, green, blue, alpha);
                 }
             }
         }
