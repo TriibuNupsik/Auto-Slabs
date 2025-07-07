@@ -1,5 +1,6 @@
 package io.github.andrew6rant.autoslabs;
 
+import io.github.andrew6rant.autoslabs.util.Util;
 import net.devtech.arrp.api.RRPCallback;
 import net.devtech.arrp.api.RuntimeResourcePack;
 import net.fabricmc.api.ModInitializer;

@@ -1,6 +1,6 @@
 package io.github.andrew6rant.autoslabs.mixin;
 
-import io.github.andrew6rant.autoslabs.PlacementUtil;
+import io.github.andrew6rant.autoslabs.util.PlacementUtil;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.PaneBlock;
 import net.minecraft.block.SlabBlock;

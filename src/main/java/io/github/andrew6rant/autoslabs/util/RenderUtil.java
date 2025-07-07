@@ -10,7 +10,6 @@ import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
@@ -29,10 +28,6 @@ public class RenderUtil {
 
     public static void drawSlabIcon(DrawContext context, int u, int v) {
         context.drawTexture(Identifier.of("autoslabs","textures/gui/autoslabs_position_lock.png"), (context.getScaledWindowWidth() - 15) / 2, (context.getScaledWindowHeight() - 42) / 2, u, v, 15, 15, 64, 64);
-    }
-
-    public static void drawSlabIcon(PlayerEntity player, DrawContext context, int u, int v, int x, int y) {
-        context.drawTexture(Identifier.of("autoslabs","textures/gui/autoslabs_position_lock.png"), x, y, u, v, 15, 15, 64, 64);
     }
 
     public static void renderOverlay(MatrixStack matrices, VertexConsumer vertexConsumer, Vec3d camDif1, BlockState state, VoxelShape shape, HitResult hitResult, float red, float green, float blue, float alpha) {

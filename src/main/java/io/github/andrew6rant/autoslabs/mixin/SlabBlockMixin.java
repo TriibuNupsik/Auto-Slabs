@@ -1,7 +1,7 @@
 package io.github.andrew6rant.autoslabs.mixin;
 
 import io.github.andrew6rant.autoslabs.AutoSlabs;
-import io.github.andrew6rant.autoslabs.PlacementUtil;
+import io.github.andrew6rant.autoslabs.util.PlacementUtil;
 import io.github.andrew6rant.autoslabs.SlabLockEnum;
 import io.github.andrew6rant.autoslabs.VerticalType;
 import net.minecraft.block.*;
@@ -26,10 +26,10 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import net.minecraft.state.StateManager;
-import io.github.andrew6rant.autoslabs.Util;
+import io.github.andrew6rant.autoslabs.util.Util;
 
-import static io.github.andrew6rant.autoslabs.Util.TYPE;
-import static io.github.andrew6rant.autoslabs.Util.VERTICAL_TYPE;
+import static io.github.andrew6rant.autoslabs.util.Util.TYPE;
+import static io.github.andrew6rant.autoslabs.util.Util.VERTICAL_TYPE;
 import static io.github.andrew6rant.autoslabs.VerticalType.*;
 import static net.minecraft.block.enums.SlabType.BOTTOM;
 import static net.minecraft.block.enums.SlabType.TOP;

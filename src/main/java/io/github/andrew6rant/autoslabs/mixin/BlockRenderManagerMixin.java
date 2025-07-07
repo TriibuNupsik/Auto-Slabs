@@ -1,6 +1,6 @@
 package io.github.andrew6rant.autoslabs.mixin;
 
-import io.github.andrew6rant.autoslabs.PlacementUtil;
+import io.github.andrew6rant.autoslabs.util.PlacementUtil;
 import io.github.andrew6rant.autoslabs.VerticalType;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
@@ -26,7 +26,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import static io.github.andrew6rant.autoslabs.Util.VERTICAL_TYPE;
+import static io.github.andrew6rant.autoslabs.util.Util.VERTICAL_TYPE;
 import static net.minecraft.block.SlabBlock.TYPE;
 
 @Mixin(BlockRenderManager.class)
