@@ -1,5 +1,6 @@
 package io.github.andrew6rant.autoslabs;
 
+import io.github.andrew6rant.autoslabs.config.CommonConfig;
 import io.github.andrew6rant.autoslabs.util.PlacementUtil;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.minecraft.block.BlockState;
@@ -33,9 +34,10 @@ public class PlacementHandler {
             return ActionResult.PASS; // Let vanilla handle non-slab items
         }
         
-        // Check if player is using autoslabs mode
-        if (AutoSlabs.slabLockPosition.getOrDefault(player, SlabLockEnum.DEFAULT_AUTOSLABS).equals(SlabLockEnum.VANILLA_PLACEMENT)) {
-            return ActionResult.PASS; // Let vanilla handle vanilla placement mode
+        // Check if autoslabs is enabled and player is not using vanilla placement mode
+        if (!CommonConfig.enableSlabLock || 
+            AutoSlabs.slabLockPosition.getOrDefault(player, SlabLockEnum.DEFAULT_AUTOSLABS).equals(SlabLockEnum.VANILLA_PLACEMENT)) {
+            return ActionResult.PASS; // Let vanilla handle when disabled or in vanilla placement mode
         }
         
         // Create placement context to check if this is actually a valid slab placement
@@ -46,7 +48,6 @@ public class PlacementHandler {
         // Only handle if we're placing on a slab or empty space (not on other blocks)
         boolean shouldHandle = currentState.getBlock() instanceof SlabBlock || currentState.isAir();
         
-        // If we shouldn't handle this placement, let vanilla handle it
         if (!shouldHandle) {
             return ActionResult.PASS;
         }
@@ -87,7 +88,6 @@ public class PlacementHandler {
         BlockState placementState = PlacementUtil.calcPlacementState(context, blockItem.getBlock().getDefaultState());
         
         if (placementState == null) {
-            // Placement not valid
             return ActionResult.FAIL;
         }
         

@@ -3,6 +3,7 @@ package io.github.andrew6rant.autoslabs.mixin;
 import io.github.andrew6rant.autoslabs.AutoSlabs;
 import io.github.andrew6rant.autoslabs.SlabLockEnum;
 import io.github.andrew6rant.autoslabs.VerticalType;
+import io.github.andrew6rant.autoslabs.config.CommonConfig;
 import io.github.andrew6rant.autoslabs.util.PlacementUtil;
 import io.github.andrew6rant.autoslabs.util.Util;
 import net.minecraft.block.*;
@@ -44,7 +45,8 @@ public class SlabBlockMixin extends Block implements Waterloggable {
 	@Inject(at = @At("HEAD"), method = "canReplace(Lnet/minecraft/block/BlockState;Lnet/minecraft/item/ItemPlacementContext;)Z", cancellable = true)
 	private void autoslabs$canSlabReplace(BlockState state, ItemPlacementContext ctx, CallbackInfoReturnable<Boolean> cir) {
 		if (ctx.getPlayer() == null) return;
-		if (!AutoSlabs.slabLockPosition.getOrDefault(ctx.getPlayer(), SlabLockEnum.DEFAULT_AUTOSLABS).equals(SlabLockEnum.VANILLA_PLACEMENT)) {
+		if (CommonConfig.enableSlabLock && 
+			!AutoSlabs.slabLockPosition.getOrDefault(ctx.getPlayer(), SlabLockEnum.DEFAULT_AUTOSLABS).equals(SlabLockEnum.VANILLA_PLACEMENT)) {
 			cir.setReturnValue(PlacementUtil.canReplace(state, ctx));
 		}
 	}
@@ -52,7 +54,8 @@ public class SlabBlockMixin extends Block implements Waterloggable {
 	@Inject(at = @At("HEAD"), method = "getPlacementState(Lnet/minecraft/item/ItemPlacementContext;)Lnet/minecraft/block/BlockState;", cancellable = true)
 	private void autoslabs$getSlabPlacementState(ItemPlacementContext ctx, CallbackInfoReturnable<BlockState> cir) {
 		if (ctx.getPlayer() == null) return;
-		if (!AutoSlabs.slabLockPosition.getOrDefault(ctx.getPlayer(), SlabLockEnum.DEFAULT_AUTOSLABS).equals(SlabLockEnum.VANILLA_PLACEMENT)) {
+		if (CommonConfig.enableSlabLock && 
+			!AutoSlabs.slabLockPosition.getOrDefault(ctx.getPlayer(), SlabLockEnum.DEFAULT_AUTOSLABS).equals(SlabLockEnum.VANILLA_PLACEMENT)) {
 			// Return the calculated state for prediction (both client and server)
 			// The UseBlockCallback will handle actual placement
 			cir.setReturnValue(PlacementUtil.calcPlacementState(ctx, this.getDefaultState()));

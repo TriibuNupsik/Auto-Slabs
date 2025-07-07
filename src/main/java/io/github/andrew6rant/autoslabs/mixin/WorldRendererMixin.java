@@ -1,10 +1,11 @@
 package io.github.andrew6rant.autoslabs.mixin;
 
-import io.github.andrew6rant.autoslabs.util.RenderUtil;
 import io.github.andrew6rant.autoslabs.SlabLockEnum;
+import io.github.andrew6rant.autoslabs.util.RenderUtil;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.*;
+import net.minecraft.client.render.VertexConsumer;
+import net.minecraft.client.render.WorldRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.hit.HitResult;
@@ -20,6 +21,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import static io.github.andrew6rant.autoslabs.AutoSlabsClient.clientSlabLockPosition;
+import static io.github.andrew6rant.autoslabs.config.CommonConfig.enableSlabLock;
 import static io.github.andrew6rant.autoslabs.config.CommonConfig.showEnhancedSlabLines;
 
 @Mixin(WorldRenderer.class)
@@ -38,7 +40,7 @@ public class WorldRendererMixin {
 
     @Inject(method = "drawCuboidShapeOutline(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumer;Lnet/minecraft/util/shape/VoxelShape;DDDFFFF)V", at = @At("HEAD"))
     private static void autoslabs$drawBlockOutline(MatrixStack matrices, VertexConsumer vertexConsumer, VoxelShape shape, double offsetX, double offsetY, double offsetZ, float red, float green, float blue, float alpha, CallbackInfo ci) {
-        if (!showEnhancedSlabLines) return;
+        if (!enableSlabLock || !showEnhancedSlabLines) return;
         if (clientSlabLockPosition.equals(SlabLockEnum.VANILLA_PLACEMENT)) return;
         Vec3d camDif = new Vec3d(offsetX, offsetY, offsetZ);
         if (autoslabs$captureCrosshairTarget != null && autoslabs$captureBlockState != null) {
