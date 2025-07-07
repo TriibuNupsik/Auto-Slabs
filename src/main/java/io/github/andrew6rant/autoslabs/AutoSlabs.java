@@ -1,5 +1,7 @@
 package io.github.andrew6rant.autoslabs;
 
+import io.github.andrew6rant.autoslabs.config.CommonConfig;
+import io.github.andrew6rant.autoslabs.statement.StatementStateRefresher;
 import io.github.andrew6rant.autoslabs.util.Util;
 import net.devtech.arrp.api.RRPCallback;
 import net.devtech.arrp.api.RuntimeResourcePack;
@@ -10,9 +12,7 @@ import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.registry.Registries;
-import io.github.andrew6rant.autoslabs.statement.StatementStateRefresher;
 import net.minecraft.util.Identifier;
-import io.github.andrew6rant.autoslabs.config.CommonConfig;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -49,5 +49,8 @@ public class AutoSlabs implements ModInitializer {
 			SlabLockEnum slabLockBuf = SlabLockEnum.POSITION_VALUES[payload.slabLock()];
 			slabLockPosition.put(context.player(), slabLockBuf);
 		});
+		
+		// Initialize placement handler
+		PlacementHandler.init();
 	}
 }

@@ -1,9 +1,10 @@
 package io.github.andrew6rant.autoslabs.mixin;
 
 import io.github.andrew6rant.autoslabs.AutoSlabs;
-import io.github.andrew6rant.autoslabs.util.PlacementUtil;
 import io.github.andrew6rant.autoslabs.SlabLockEnum;
 import io.github.andrew6rant.autoslabs.VerticalType;
+import io.github.andrew6rant.autoslabs.util.PlacementUtil;
+import io.github.andrew6rant.autoslabs.util.Util;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.enums.SlabType;
@@ -11,6 +12,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.state.StateManager;
 import net.minecraft.util.BlockMirror;
 import net.minecraft.util.BlockRotation;
 import net.minecraft.util.hit.BlockHitResult;
@@ -25,12 +27,10 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import net.minecraft.state.StateManager;
-import io.github.andrew6rant.autoslabs.util.Util;
 
+import static io.github.andrew6rant.autoslabs.VerticalType.*;
 import static io.github.andrew6rant.autoslabs.util.Util.TYPE;
 import static io.github.andrew6rant.autoslabs.util.Util.VERTICAL_TYPE;
-import static io.github.andrew6rant.autoslabs.VerticalType.*;
 import static net.minecraft.block.enums.SlabType.BOTTOM;
 import static net.minecraft.block.enums.SlabType.TOP;
 
@@ -53,6 +53,8 @@ public class SlabBlockMixin extends Block implements Waterloggable {
 	private void autoslabs$getSlabPlacementState(ItemPlacementContext ctx, CallbackInfoReturnable<BlockState> cir) {
 		if (ctx.getPlayer() == null) return;
 		if (!AutoSlabs.slabLockPosition.getOrDefault(ctx.getPlayer(), SlabLockEnum.DEFAULT_AUTOSLABS).equals(SlabLockEnum.VANILLA_PLACEMENT)) {
+			// Return the calculated state for prediction (both client and server)
+			// The UseBlockCallback will handle actual placement
 			cir.setReturnValue(PlacementUtil.calcPlacementState(ctx, this.getDefaultState()));
 		}
 	}
