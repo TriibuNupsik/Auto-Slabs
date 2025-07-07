@@ -1,15 +1,18 @@
 package io.github.andrew6rant.autoslabs;
 
+import io.github.andrew6rant.autoslabs.config.CommonConfig;
+import io.github.andrew6rant.autoslabs.statement.StatementStateRefresher;
+import io.github.andrew6rant.autoslabs.util.Util;
 import net.devtech.arrp.api.RRPCallback;
 import net.devtech.arrp.api.RuntimeResourcePack;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.registry.RegistryEntryAddedCallback;
+import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
-import io.github.andrew6rant.autoslabs.statement.StatementStateRefresher;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,18 +20,22 @@ import java.util.Map;
 import static io.github.andrew6rant.autoslabs.config.CommonConfig.dumpResources;
 
 public class AutoSlabs implements ModInitializer {
-	public static final RuntimeResourcePack AUTO_SLABS_RESOURCES = RuntimeResourcePack.create("autoslabs:resources", 15);
+	public static final RuntimeResourcePack AUTO_SLABS_RESOURCES = RuntimeResourcePack.create(Identifier.of("autoslabs", "resources"));
 
 	public static final Map<PlayerEntity, SlabLockEnum> slabLockPosition = new HashMap<>();
 
 	@Override
 	public void onInitialize() {
+		// Register config with MidnightLib
+		CommonConfig.init("auto_slabs", CommonConfig.class);
+
 		// Config is initialized in a static block in StateMixin. I need it to run earlier than State$get, and AutoSlabs$onInitialize is too late.
 		for (Block block : Registries.BLOCK) {
 			Util.registerSlab(block);
 		}
 
 		RegistryEntryAddedCallback.event(Registries.BLOCK).register((raw, id, block) -> Util.registerSlab(block));
+		PayloadTypeRegistry.playC2S().register(SlabLockPayload.ID, SlabLockPayload.CODEC);
 
 		StatementStateRefresher.INSTANCE.reorderBlockStates();
 
@@ -38,9 +45,12 @@ public class AutoSlabs implements ModInitializer {
 			AUTO_SLABS_RESOURCES.dump();
 		}
 
-		ServerPlayNetworking.registerGlobalReceiver(new Identifier("autoslabs", "slab_lock"), (server, player, handler, buf, responseSender) -> {
-			SlabLockEnum slabLockBuf = buf.readEnumConstant(SlabLockEnum.class);
-			slabLockPosition.put(player, slabLockBuf);
+		ServerPlayNetworking.registerGlobalReceiver(SlabLockPayload.ID, (payload, context) -> {
+			SlabLockEnum slabLockBuf = SlabLockEnum.POSITION_VALUES[payload.slabLock()];
+			slabLockPosition.put(context.player(), slabLockBuf);
 		});
+		
+		// Initialize placement handler
+		PlacementHandler.init();
 	}
 }

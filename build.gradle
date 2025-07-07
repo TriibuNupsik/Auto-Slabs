@@ -20,6 +20,12 @@ repositories {
 	maven {
 		url "https://maven.terraformersmc.com/releases/"
 	}
+	maven {
+		url "https://jitpack.io"
+	}
+	maven {
+		url = "https://api.modrinth.com/maven"
+	}
 }
 
 dependencies {
@@ -31,8 +37,11 @@ dependencies {
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-    // Removed Statement API dependency - using internal fork instead
-    include modApi("net.devtech:arrp:${project.arrp_version}")
+    // ARRP from JitPack
+    modImplementation include("com.github.TriibuNupsik:ARRP:${project.arrp_version}")
+
+	// MidnightLib from TeamMidnightDust
+	modImplementation include ("maven.modrinth:midnightlib:${project.midnightlib_version}")  
 
 	modImplementation ("com.terraformersmc:modmenu:${project.modmenu_version}") {
 		exclude module: "fabric-api"

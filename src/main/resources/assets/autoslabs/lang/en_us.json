@@ -1,6 +1,20 @@
 {
   "auto_slabs.midnightconfig.title": "AutoSlabs",
-  "auto_slabs.midnightconfig.suppressStatementAPILogger": "Suppress Statement API's Logger?",
-  "auto_slabs.midnightconfig.dumpResources": "Dump generated resources on boot?"
-
+  "auto_slabs.midnightconfig.dumpResources": "Dump generated resources on boot?",
+  "auto_slabs.midnightconfig.showEnhancedSlabLines": "Show enhanced slab lines?",
+  "auto_slabs.midnightconfig.enableSlabLock": "Placement Master Toggle",
+  "auto_slabs.midnightconfig.showCrosshairIcon": "Crosshair Icon Visibility",
+  "auto_slabs.midnightconfig.enum.ShowCrosshairIcon.ALWAYS": "Always",
+  "auto_slabs.midnightconfig.enum.ShowCrosshairIcon.ON_CHANGE": "On Change",
+  "auto_slabs.midnightconfig.enum.ShowCrosshairIcon.NEVER": "Never",
+  "category.autoslabs.keybinds": "AutoSlabs",
+  "key.autoslabs.place_mode": "Toggle Placement Mode",
+  "text.autoslabs.slab_lock.DEFAULT_AUTOSLABS": "AutoSlabs Mode: Default",
+  "text.autoslabs.slab_lock.BOTTOM_SLAB": "AutoSlabs Mode: Bottom Slab",
+  "text.autoslabs.slab_lock.TOP_SLAB": "AutoSlabs Mode: Top Slab",
+  "text.autoslabs.slab_lock.NORTH_SLAB_VERTICAL": "AutoSlabs Mode: North Vertical Slab",
+  "text.autoslabs.slab_lock.SOUTH_SLAB_VERTICAL": "AutoSlabs Mode: South Vertical Slab",
+  "text.autoslabs.slab_lock.EAST_SLAB_VERTICAL": "AutoSlabs Mode: East Vertical Slab",
+  "text.autoslabs.slab_lock.WEST_SLAB_VERTICAL": "AutoSlabs Mode: West Vertical Slab",
+  "text.autoslabs.slab_lock.VANILLA_PLACEMENT": "AutoSlabs Mode: Vanilla Placement"
 }

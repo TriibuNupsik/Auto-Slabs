@@ -1,7 +1,9 @@
-package io.github.andrew6rant.autoslabs;
+package io.github.andrew6rant.autoslabs.util;
 
+import io.github.andrew6rant.autoslabs.AutoSlabs;
+import io.github.andrew6rant.autoslabs.SlabLockEnum;
+import io.github.andrew6rant.autoslabs.VerticalType;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.block.PaneBlock;
 import net.minecraft.block.SlabBlock;
 import net.minecraft.block.enums.SlabType;
@@ -12,7 +14,6 @@ import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.tag.BlockTags;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -21,9 +22,9 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.RaycastContext;
 
-import static io.github.andrew6rant.autoslabs.Util.*;
-import static io.github.andrew6rant.autoslabs.VerticalType.*;
-import static net.minecraft.block.LightBlock.LEVEL_15;
+import static io.github.andrew6rant.autoslabs.VerticalType.EAST_WEST;
+import static io.github.andrew6rant.autoslabs.VerticalType.NORTH_SOUTH;
+import static io.github.andrew6rant.autoslabs.util.Util.*;
 import static net.minecraft.block.PaneBlock.cannotConnect;
 import static net.minecraft.block.SlabBlock.TYPE;
 import static net.minecraft.block.SlabBlock.WATERLOGGED;
@@ -281,6 +282,8 @@ public class PlacementUtil {
         if (player == null) return null;
         BlockPos blockPos = ctx.getBlockPos();
         FluidState fluidState = ctx.getWorld().getFluidState(blockPos);
+        
+        // Handle locked positions first
         switch (AutoSlabs.slabLockPosition.getOrDefault(player, SlabLockEnum.DEFAULT_AUTOSLABS)) {
             case BOTTOM_SLAB -> {
                 return state.with(TYPE, SlabType.BOTTOM).with(WATERLOGGED, fluidState.getFluid() == Fluids.WATER);
@@ -301,21 +304,13 @@ public class PlacementUtil {
                 return state.with(TYPE, SlabType.BOTTOM).with(VERTICAL_TYPE, EAST_WEST).with(WATERLOGGED, fluidState.getFluid() == Fluids.WATER);
             }
         }
+        
+        // Handle dynamic placement based on hit position
         BlockState blockState = ctx.getWorld().getBlockState(blockPos);
-        // horrendous hack to make the client think that it can place down a slab
-        // without visual desync or server-client communication
-        // (light blocks with a level of 0 are completely invisible and also have no hitbox
-        // If I return null, the client does not play the "block place" animation
-        if (!(ctx.getWorld() instanceof ServerWorld)) {
-            if (blockState.isOf(state.getBlock())) {
-                return blockState.with(TYPE, SlabType.DOUBLE).with(WATERLOGGED, false);
-            } else {
-                return Blocks.LIGHT.getDefaultState().with(LEVEL_15, 0);
-            }
-        }
         Direction ctxSide = ctx.getSide();
         BlockHitResult blockHitResult = PlacementUtil.calcRaycast(player);
         HitPart part = getHitPart(blockHitResult);
+        
         return switch (ctxSide) {
             case UP -> calcUpPlacement(blockState, state, part, fluidState);
             case DOWN -> calcDownPlacement(blockState, state, part, fluidState);

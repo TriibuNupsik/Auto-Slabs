@@ -1,5 +1,6 @@
-package io.github.andrew6rant.autoslabs;
+package io.github.andrew6rant.autoslabs.util;
 
+import io.github.andrew6rant.autoslabs.VerticalType;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SlabBlock;
@@ -9,9 +10,6 @@ import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
@@ -23,16 +21,13 @@ import org.joml.Vector3f;
 import java.util.Objects;
 
 import static io.github.andrew6rant.autoslabs.AutoSlabsClient.clientSlabLockPosition;
-import static io.github.andrew6rant.autoslabs.Util.*;
+import static io.github.andrew6rant.autoslabs.util.Util.*;
 
 // massive thanks to Schauweg for helping with some of this code
 public class RenderUtil {
 
-    public static void drawSlabIcon(PlayerEntity player, DrawContext context, int u, int v) {
-        ItemStack heldItem = player.getStackInHand(player.getActiveHand());
-        if (heldItem != null && !heldItem.isEmpty() && heldItem.getItem() instanceof BlockItem && ((BlockItem) heldItem.getItem()).getBlock() instanceof SlabBlock) {
-            context.drawTexture(new Identifier("autoslabs","textures/gui/autoslabs_position_lock.png"), (context.getScaledWindowWidth() - 15) / 2, (context.getScaledWindowHeight() - 42) / 2, u, v, 15, 15, 64, 64);
-        }
+    public static void drawSlabIcon(DrawContext context, int u, int v) {
+        context.drawTexture(Identifier.of("autoslabs","textures/gui/autoslabs_position_lock.png"), (context.getScaledWindowWidth() - 15) / 2, (context.getScaledWindowHeight() - 42) / 2, u, v, 15, 15, 64, 64);
     }
 
     public static void renderOverlay(MatrixStack matrices, VertexConsumer vertexConsumer, Vec3d camDif1, BlockState state, VoxelShape shape, HitResult hitResult, float red, float green, float blue, float alpha) {
@@ -41,7 +36,7 @@ public class RenderUtil {
             if (hitResult.getType() == HitResult.Type.BLOCK) {
 
                 BlockHitResult result = (BlockHitResult) hitResult;
-                HitPart part = getHitPart(result);
+                Util.HitPart part = getHitPart(result);
                 Vec3d camDif = getCameraOffset(camDif1, shape, result.getSide());
 
                 if (state.getBlock() instanceof SlabBlock) {
@@ -60,10 +55,10 @@ public class RenderUtil {
         Vector3f endRaw = new Vector3f((float) (end.x + camDif.x), (float) (end.y + camDif.y), (float) (end.z + camDif.z));
 
         vertexConsumer.vertex(entry.getPositionMatrix(), startRaw.x, startRaw.y, startRaw.z)
-                .color(red, green, blue, alpha).normal(entry.getNormalMatrix(), normal.x, normal.y, normal.z).next();
+                .color(red, green, blue, alpha).normal(normal.x, normal.y, normal.z);
 
         vertexConsumer.vertex(entry.getPositionMatrix(), endRaw.x, endRaw.y, endRaw.z)
-                .color(red, green, blue, alpha).normal(entry.getNormalMatrix(), normal.x, normal.y, normal.z).next();
+                .color(red, green, blue, alpha).normal(normal.x, normal.y, normal.z);
     }
 
     private static void renderOverlayToDirection(BlockState state, Direction side, MatrixStack matrixStack, VertexConsumer vertexConsumer, Vec3d camDif, HitPart part, float red, float green, float blue, float alpha) {
