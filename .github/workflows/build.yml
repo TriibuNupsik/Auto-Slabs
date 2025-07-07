@@ -33,6 +33,8 @@ jobs:
         with:
           path: ~/.gradle/wrapper
           key: ${{ runner.os }}-gradle-wrapper-${{ hashFiles('**/gradle/wrapper/gradle-wrapper.properties') }}
+      - name: Grant execute permission to gradlew
+        run: chmod +x gradlew
       - name: Build
         run: ./gradlew build
       - name: Upload artifacts
