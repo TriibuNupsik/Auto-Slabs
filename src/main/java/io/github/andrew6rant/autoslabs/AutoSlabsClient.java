@@ -6,6 +6,7 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
+import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.resource.ResourcePackActivationType;
 import net.fabricmc.loader.api.FabricLoader;
@@ -16,6 +17,7 @@ import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import org.lwjgl.glfw.GLFW;
@@ -33,8 +35,9 @@ public class AutoSlabsClient implements ClientModInitializer {
 	private static long slabIconVisibleUntil = 0;
 
 	private void sendKeybind(SlabLockEnum lockedPosition) {
-		SlabLockPayload payload = new SlabLockPayload(lockedPosition.ordinal());
-		ClientPlayNetworking.send(payload);
+		PacketByteBuf buf = PacketByteBufs.create();
+		buf.writeEnumConstant(lockedPosition);
+		ClientPlayNetworking.send(new Identifier("autoslabs", "slab_lock"), buf);
 	}
 
 	private void setKeybind(MinecraftClient client) {

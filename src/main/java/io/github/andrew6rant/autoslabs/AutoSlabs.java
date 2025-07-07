@@ -7,7 +7,6 @@ import net.devtech.arrp.api.RRPCallback;
 import net.devtech.arrp.api.RuntimeResourcePack;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.registry.RegistryEntryAddedCallback;
-import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.PlayerEntity;
@@ -35,7 +34,6 @@ public class AutoSlabs implements ModInitializer {
 		}
 
 		RegistryEntryAddedCallback.event(Registries.BLOCK).register((raw, id, block) -> Util.registerSlab(block));
-		PayloadTypeRegistry.playC2S().register(SlabLockPayload.ID, SlabLockPayload.CODEC);
 
 		StatementStateRefresher.INSTANCE.reorderBlockStates();
 
@@ -45,9 +43,9 @@ public class AutoSlabs implements ModInitializer {
 			AUTO_SLABS_RESOURCES.dump();
 		}
 
-		ServerPlayNetworking.registerGlobalReceiver(SlabLockPayload.ID, (payload, context) -> {
-			SlabLockEnum slabLockBuf = SlabLockEnum.POSITION_VALUES[payload.slabLock()];
-			slabLockPosition.put(context.player(), slabLockBuf);
+		ServerPlayNetworking.registerGlobalReceiver(new Identifier("autoslabs", "slab_lock"), (server, player, handler, buf, responseSender) -> {
+			SlabLockEnum slabLockBuf = buf.readEnumConstant(SlabLockEnum.class);
+			slabLockPosition.put(player, slabLockBuf);
 		});
 		
 		// Initialize placement handler
