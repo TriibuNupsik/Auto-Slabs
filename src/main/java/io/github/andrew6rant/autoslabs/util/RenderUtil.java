@@ -55,10 +55,10 @@ public class RenderUtil {
         Vector3f endRaw = new Vector3f((float) (end.x + camDif.x), (float) (end.y + camDif.y), (float) (end.z + camDif.z));
 
         vertexConsumer.vertex(entry.getPositionMatrix(), startRaw.x, startRaw.y, startRaw.z)
-                .color(red, green, blue, alpha).normal(normal.x, normal.y, normal.z);
+                .color(red, green, blue, alpha).normal(entry.getNormalMatrix(), normal.x, normal.y, normal.z).next();
 
         vertexConsumer.vertex(entry.getPositionMatrix(), endRaw.x, endRaw.y, endRaw.z)
-                .color(red, green, blue, alpha).normal(normal.x, normal.y, normal.z);
+                .color(red, green, blue, alpha).normal(entry.getNormalMatrix(), normal.x, normal.y, normal.z).next();
     }
 
     private static void renderOverlayToDirection(BlockState state, Direction side, MatrixStack matrixStack, VertexConsumer vertexConsumer, Vec3d camDif, HitPart part, float red, float green, float blue, float alpha) {
